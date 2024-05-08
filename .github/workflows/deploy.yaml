@@ -18,9 +18,5 @@ jobs:
         az login --username ${{ secrets.AZURE_USERNAME }} --password ${{ secrets.AZURE_PASSWORD }}
 
     - name: Deploy to Azure
-      uses: azure/arm-deploy@v1
-      with:
-        subscriptionId: 3f5dcaa7-8c81-4a8b-a30c-8e938d2a4d46
-        resourceGroupName: GitHub-Copilot-Challenges
-        template: ./deploy.json
-        parameters: ./deploy.parameters.json
+      run: |
+        az deployment group create --resource-group GitHub-Copilot-Challenges --template-file "C:/Users/azureuser/source/repos/Contact-Database-Application/deploy.json" --parameters "C:/Users/azureuser/source/repos/Contact-Database-Application/deploy.parameters.json"

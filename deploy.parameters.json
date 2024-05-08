@@ -2,20 +2,14 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "location": {
-            "value": "West US"
+        "webAppName": {
+            "value": "Contact-Database-Application-flowech"
         },
-        "vmName": {
-            "value": "myVM"
+        "appServicePlanName": {
+            "value": "Contact-Database-Application-Plan"
         },
-        "vmSize": {
-            "value": "Standard_DS2_v2"
-        },
-        "adminUsername": {
-            "value": "adminUser"
-        },
-        "adminPassword": {
-            "value": "P@ssw0rd123!"
+        "resourceGroupName": {
+            "value": "GitHub-Copilot-Challenges"
         }
     }
 }

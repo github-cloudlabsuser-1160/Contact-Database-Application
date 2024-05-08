@@ -2,31 +2,56 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "webAppName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name for the web app."
+            },
+            "defaultValue": "Contact-Database-Application-flowech"
+        },
+        "appServicePlanName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name for the App Service plan."
+            },
+            "defaultValue": "Contact-Database-Application-Plan"
+        },
         "resourceGroupName": {
             "type": "string",
             "metadata": {
-                "description": "Name of the existing resource group."
-            }
+                "description": "Name for the resource group."
+            },
+            "defaultValue": "GitHub-Copilot-Challenges"
         }
-    },
-    "variables": {
-        "webAppName": "mywebapp"
     },
     "resources": [
         {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2021-02-01",
+            "name": "[parameters('appServicePlanName')]",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "F1",
+                "capacity": 1
+            }
+        },
+        {
             "type": "Microsoft.Web/sites",
             "apiVersion": "2021-02-01",
-            "name": "[variables('webAppName')]",
+            "name": "[parameters('webAppName')]",
             "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
+            ],
             "properties": {
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', 'appServicePlanName')]"
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
             }
         }
     ],
     "outputs": {
         "webAppUrl": {
             "type": "string",
-            "value": "[reference(variables('webAppName')).defaultHostName]"
+            "value": "[concat('https://', parameters('webAppName'), '.azurewebsites.net')]"
         }
     }
 }

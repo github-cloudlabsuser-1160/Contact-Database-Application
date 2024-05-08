@@ -17,8 +17,10 @@ jobs:
       run: |
         az login --username ${{ secrets.AZURE_USERNAME }} --password ${{ secrets.AZURE_PASSWORD }}
 
-    - name: Deploy to Azure Web App
-      uses: azure/webapps-deploy@v2
+    - name: Deploy to Azure
+      uses: azure/arm-deploy@v1
       with:
-        app-name: <your-web-app-name>
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        subscriptionId: 3f5dcaa7-8c81-4a8b-a30c-8e938d2a4d46
+        resourceGroupName: GitHub-Copilot-Challenges
+        template: ./deploy.json
+        parameters: ./deploy.parameters.json
